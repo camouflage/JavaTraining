@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*; 
 import javax.swing.*;
+import java.math.*;
 
 class Calculator extends JFrame {
 	// Constructor
@@ -109,8 +110,11 @@ class Calculator extends JFrame {
 				} else if ( op.equals("/") ) {
 					answer = number1 / number2;
 				} 
-				
-				ans.setText(String.format("%.5f", answer));
+
+				BigDecimal bd = new BigDecimal(answer);
+				double roundAns = bd.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+				ans.setText(Double.toString(roundAns));
+
 			}
 		});
 
