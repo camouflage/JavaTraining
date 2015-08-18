@@ -6,9 +6,9 @@ class Calculator extends JFrame {
 	// Constructor
 	public Calculator() {
 		setTitle("Easy Calculator");   
-		setBounds(500, 500, 300, 150);
+		setBounds(500, 500, 350, 150);
 
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     	JPanel contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -36,7 +36,7 @@ class Calculator extends JFrame {
 		op1.setPreferredSize(new Dimension(50,50));
 		num2.setPreferredSize(new Dimension(50,50));
 		op2.setPreferredSize(new Dimension(50,50));
-		ans.setPreferredSize(new Dimension(60,50));
+		ans.setPreferredSize(new Dimension(100,50));
 
 		JButton button1 = new JButton("+");
 		JButton button2 = new JButton("-");
@@ -48,7 +48,7 @@ class Calculator extends JFrame {
 		button2.setPreferredSize(new Dimension(50,50));
 		button3.setPreferredSize(new Dimension(50,50));
 		button4.setPreferredSize(new Dimension(50,50));
-		button5.setPreferredSize(new Dimension(60,50));
+		button5.setPreferredSize(new Dimension(100,50));
 
     	pane1.add(num1);
 		pane1.add(op1);
@@ -110,7 +110,7 @@ class Calculator extends JFrame {
 					answer = number1 / number2;
 				} 
 				
-				ans.setText(answer.toString());
+				ans.setText(String.format("%.5f", answer));
 			}
 		});
 
