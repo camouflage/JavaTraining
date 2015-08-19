@@ -1,2 +1,31 @@
 Set1
-1. No. When there is a barrier in front of the bug, it changes its direction; otherwise, it stays moving forward.
+1. No. When there is a barrier in front of the bug, it changes its direction, not moving to a new location; otherwise, it stays moving forward to a new location.
+2. The bug moves clockwise.
+3. If the bug does not move, it turns right by 45 degree.
+4. A series of flowers in the same color as the bug.
+5. When the bug is at the edge, it turns right by 45 degree(e.g. Facing north, the bug will turn to face northeast; facing northeast, the bug will turn to face east etc). However, if the grid is unbounded, the bug will move out of the grid.
+6. The bug tries to avoid the rock by turning right by 45 degree.
+7. Flowers do not move.
+8. With time going by, flowers become dark(e.g. from red, to pink, to purple, and finally to black).
+9. Rocks are barriers that do not move unless you call the method moveTo.
+10. A place can only be occupied by one actor at a time.
+
+Exercises
+1.
+Degrees Compass Direction
+0		North
+45		Northeast
+90		East
+135		Southeast
+180		South
+225		Southwest
+270		West
+315		Northwest
+360		North
+
+2. A bug can be moved to any place in the grid, even the place has been occupied by the other actor. Moving the bug does not change the direction it faces. Trying to move the bug out of the grid, an error message will be shown.
+
+3. Use the method void setColor(java.awt.Color) to change the color of the actor.
+
+4. The bug will disappear.
+
