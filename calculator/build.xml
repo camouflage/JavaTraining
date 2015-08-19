@@ -4,10 +4,10 @@
 	<property name="buildDir" location="build"/>
 	<property name="distDir" location="dist"/>
 
-  <target name="clean">
-      <delete dir="${buildDir}"/>
-      <delete dir="${distDir}"/>
-  </target>
+  	<target name="clean">
+    	<delete dir="${buildDir}"/>
+     	<delete dir="${distDir}"/>
+  	</target>
 
 	<target name="init">
 		<tstamp/>
@@ -20,7 +20,14 @@
 	</target>
 
 	<target name="dist" depends="compile">
-   		<jar destfile="${distDir}/package-${DSTAMP}.jar" basedir="${buildDir}"/>
+   		<jar destfile="${distDir}/package-${DSTAMP}.jar" basedir="${buildDir}">
+   			<manifest>
+              <attribute name="Main-Class" value="Calculator"/>
+          </manifest>
+      	</jar>
 	</target>
 
+	<target name="run" depends="dist">
+        <java jar="${distDir}/package-${DSTAMP}.jar" fork="true"/>
+    </target>
 </project>
