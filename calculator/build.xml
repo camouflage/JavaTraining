@@ -23,11 +23,11 @@
    		<jar destfile="${distDir}/package-${DSTAMP}.jar" basedir="${buildDir}">
    			<manifest>
               <attribute name="Main-Class" value="Calculator"/>
-          </manifest>
-      	</jar>
+        </manifest>
+      </jar>
 	</target>
 
 	<target name="run" depends="dist">
         <java jar="${distDir}/package-${DSTAMP}.jar" fork="true"/>
-    </target>
+  </target>
 </project>
