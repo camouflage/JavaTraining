@@ -17,6 +17,7 @@
  */
 
 import info.gridworld.actor.Bug;
+import java.util.*;
 
 /**
  * A <code>DancingBug</code> traces out a dancing pattern of a given size. <br />
@@ -34,7 +35,11 @@ public class DancingBug extends Bug
     public DancingBug(int[] array)
     {
         steps = 0;
-        moveArray = array;
+        if ( array == null ) {
+            moveArray = new int[0];
+        } else {
+            moveArray = Arrays.copyOf(array, array.length);
+        }
     }
 
     /**

@@ -30,13 +30,10 @@ public class DancingBugRunner
     public static void main(String[] args)
     {
         ActorWorld world = new ActorWorld();
-        //int[] array = {0, 1, 2, 3, 4, 5};
-        int[] array = {1};
+        int[] array = {0, 1, 2, 3, 4, 5};
         DancingBug alice = new DancingBug(array);
         alice.setColor(Color.ORANGE);
-        //DancingBug bob = new DancingBug(3);
         world.add(new Location(5, 5), alice);
-        //world.add(new Location(5, 5), bob);
         world.show();
     }
 }
