@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<project name="jumper_src" default="run">
+
+	<target name="compile">
+   		<javac srcdir="." destdir=".">
+        <classpath>
+          <pathelement path="./../gridworld.jar"/>
+        </classpath>
+      </javac>
+	</target>
+
+  <target name="run" depends="compile">
+      <java classname="JumperRunner" fork="true">
+        <classpath>
+          <pathelement path="./../gridworld.jar"/>
+          <pathelement path="."/>
+        </classpath>
+      </java>
+  </target>
+
+</project>

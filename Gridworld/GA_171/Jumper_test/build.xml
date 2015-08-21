@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<project name="jumper_test" default="test">
+    <target name="init">
+        <mkdir dir="../build"/>
+        <mkdir dir="../report"/>
+    </target>
+
+	<target name="compile" depends="init">
+        <javac srcdir="../Jumper_src" destdir="../build">
+            <classpath>
+                <pathelement path="../gridworld.jar"/>
+                <pathelement path="."/>
+                <pathelement path="../junit-4.9.jar"/>
+            </classpath>
+        </javac>
+        <javac srcdir="." destdir="../build">
+            <classpath>
+                <pathelement path="../gridworld.jar"/>
+                <pathelement path="../Jumper_src"/>
+                <pathelement path="../junit-4.9.jar"/>
+            </classpath>
+        </javac>
+	</target>
+
+  <target name="run" depends="compile">
+      <java classname="JumperRunner" fork="true">
+        <classpath>
+          <pathelement path="../gridworld.jar"/>
+          <pathelement path="../build"/>
+          <pathelement path="../junit-4.9.jar"/>
+        </classpath>
+      </java>
+  </target>
+
+  <target name="test" depends="compile">
+      <junit printsummary="on" fork="true" showoutput="true">
+          <classpath>
+              <pathelement path="../gridworld.jar"/>
+              <pathelement path="../build"/>
+              <pathelement path="../junit-4.9.jar"/>
+          </classpath>
+          <formatter type="brief" usefile="false"/>
+          <batchtest todir="../retport">
+              <fileset dir=".">
+                  <include name="**/*Test*.*"/>
+              </fileset>
+          </batchtest>
+      </junit>
+  </target>
+
+</project>

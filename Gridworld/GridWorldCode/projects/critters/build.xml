@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="critter" default="compile">
+    <property name="parentDir" location="./../../"/>
+
+    <target name="compile">
+        <javac srcdir="." destdir=".">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+        </classpath>
+      </javac>
+    </target>
+
+    <target name="chameleon" depends="compile">
+      <java classname="ChameleonRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="."/>
+        </classpath>
+      </java>
+    </target>
+
+    <target name="kid" depends="compile">
+      <java classname="ChameleonKidRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="ChameleonKid"/>
+          <pathelement path="."/>
+        </classpath>
+      </java>
+    </target>
+
+</project>
