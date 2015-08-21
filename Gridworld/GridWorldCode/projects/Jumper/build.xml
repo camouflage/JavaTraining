@@ -2,11 +2,7 @@
 <project name="jumper" default="run">
   <property name="parentDir" location="./../../"/>
 
-	<target name="init">
-		<tstamp/>
-	</target>
-
-	<target name="compile" depends="init">
+	<target name="compile">
    		<javac srcdir="." destdir=".">
         <classpath>
           <pathelement path="${parentDir}/gridworld.jar"/>
@@ -22,4 +18,16 @@
         </classpath>
       </java>
   </target>
+
+  <target name="junit" depends="compile">
+      <junit>
+          <classpath>
+              <pathelement path="${parentDir}/junit-4.9.jar"/>
+              <pathelement path="."/>
+          </classpath>
+          <formatter type="brief" usefile="false" />
+          <test name="JumperTest" />
+      </junit>
+  </target>
+
 </project>

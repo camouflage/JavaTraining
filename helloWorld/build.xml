@@ -1,33 +1,33 @@
 <?xml version="1.0"?>
-<project name="helloWorld" default="run">
+<project name="helloWorld" default="junit">
     <property name="srcDir" location="src"/>
     <property name="buildDir" location="build"/>
-    <property name="distDir" location="dist"/>
 
   	<target name="clean">
     	<delete dir="${buildDir}"/>
-     	<delete dir="${distDir}"/>
   	</target>
 
 	  <target name="init">
-		  <tstamp/>
    		<mkdir dir="${buildDir}"/>
-   		<mkdir dir="${distDir}"/>
 	  </target>
 
 	  <target name="compile" depends="clean, init">
-   		<javac srcdir="${srcDir}" destdir="${buildDir}"/>
+   		<javac srcdir="${srcDir}" destdir="${buildDir}">
+        <classpath>
+          <pathelement path="junit-4.9.jar"/>
+        </classpath>
+      </javac>
 	  </target>
 
-	  <target name="dist" depends="compile">
-   		<jar destfile="${distDir}/package-${DSTAMP}.jar" basedir="${buildDir}">
-   			  <manifest>
-              <attribute name="Main-Class" value="HelloWorld"/>
-          </manifest>
-      </jar>
+    <target name="junit">
+          <junit>
+            <classpath>
+              <pathelement path="junit-4.9.jar"/>
+              <pathelement path="${buildDir}"/>
+            </classpath>
+            <formatter type="brief" usefile="false" />
+            <test name="HelloWorldTest" />
+          </junit>
     </target>
 
-    <target name="run" depends="dist">
-        <java jar="${distDir}/package-${DSTAMP}.jar" fork="true"/>
-    </target>
 </project>
