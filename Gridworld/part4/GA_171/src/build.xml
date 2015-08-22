@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<project default = "playboy">
+    <property name="bldDir" location="build"/>
+
+    <path id="cp">
+        <pathelement path="."/>
+        <pathelement path="./../gridworld.jar"/>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${bldDir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="." destdir="${bldDir}">
+            <classpath refid="cp"/>
+        </javac>
+    </target>
+
+    <target name="playboy" depends="compile">
+        <java fork="true" classname="PlayBoyRunner" classpath="${bldDir}">
+            <classpath refid="cp"/>
+        </java>
+    </target>
+
+    <target name="clean">
+        <delete dir="${bldDir}"/>
+    </target>
+</project>
+

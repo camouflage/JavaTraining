@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="critter" default="compile">
+<project name="critter" default="all">
     <property name="parentDir" location="./../"/>
     <property name="buildDir" location="build"/>
 
