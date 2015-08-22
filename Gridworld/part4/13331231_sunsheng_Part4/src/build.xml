@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <project name="critter" default="compile">
-    <property name="parentDir" location="./../../"/>
+    <property name="parentDir" location="./../"/>
     <property name="buildDir" location="build"/>
 
     <target name="clean">
