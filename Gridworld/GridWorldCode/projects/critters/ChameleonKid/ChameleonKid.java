@@ -22,13 +22,15 @@ public class ChameleonKid extends ChameleonCritter {
     {
         ArrayList<Actor> actor = new ArrayList<Actor>();
         int[] dirs =
-            { Location.AHEAD, Location.HALF_CIRCLE};
+            { Location.AHEAD, 180 };
 
         for (Location loc : getLocationsInDirections(dirs))
         {
             Actor a = getGrid().get(loc);
             if (a != null)
+            {
                 actor.add(a);
+            }
         }
 
         return actor;
@@ -52,7 +54,9 @@ public class ChameleonKid extends ChameleonCritter {
         {
             Location neighborLoc = loc.getAdjacentLocation(getDirection() + d);
             if (gr.isValid(neighborLoc))
+            {
                 locs.add(neighborLoc);
+            }
         }
         return locs;
     }    
