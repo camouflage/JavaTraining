@@ -1,8 +1,9 @@
 package my;
 
-import imagereader.Runner;
+import imagereader.*;
+import java.awt.Image;
 
-public class ImplementImageProcessor extends IImageProcessor {
+public class ImplementImageProcessor implements IImageProcessor {
     public Image showChanelR(Image sourceImage) {
         return null;
     }

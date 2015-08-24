@@ -2,13 +2,15 @@ package my;
 
 import java.io.*;
 import java.awt.image.*;
+import java.awt.Image;
 import java.awt.Toolkit;
+import javax.imageio.ImageIO;
 
-import imagereader.Runner;
+import imagereader.*;
 
-
-public class ImplementImageIO extends ImageIO{
+public class ImplementImageIO implements IImageIO {
     public Image myRead(String filePath) {
+        Image img = null;
         try {
             File file = new File(filePath);
             FileInputStream fis = new FileInputStream(file);
@@ -28,6 +30,7 @@ public class ImplementImageIO extends ImageIO{
             int height = toInt(buffer4, 4);
 
             fis.skip(2);
+
             // read #28-29
             fis.read(buffer2);
             int pixelBit = toInt(buffer2, 2);
@@ -40,13 +43,22 @@ public class ImplementImageIO extends ImageIO{
             fis.read(buffer4);
             int size = toInt(buffer4, 4);
 
-            // 
-            int blank = ((size / height) - width * 3) / (width * 3);
+            // skip next 16 bytes
+            fis.skip(16);
+
+            // Calculate padding.
+            int blank = ((size / height) - width * 3);
+            if ( blank == 4 ) {
+                blank = 0;
+            }
+
+            // Now at byte#54.
             byte rgb[] = new byte[(width + blank) * height * 3];
-            fis.read(rgb, 54, (width + blank) * height * 3);
+            fis.read(rgb, 0, (width + blank) * height * 3);
 
             fis.close();
 
+            // Convert the byte array to int array.
             int rgbInt[] = new int[width * height];
             int idx = 0;
             for ( int y = 0; y < height; y++ ) {
@@ -56,23 +68,26 @@ public class ImplementImageIO extends ImageIO{
                         | (( (int) rgb[idx + 2] & 0xff ) << 16)
                         | (( (int) rgb[idx + 1] & 0xff ) << 8)
                         | (int) rgb[idx] & 0xff;
-                idx += 3;
+                    idx += 3;
                 }
                 idx += blank;
             }
 
-            Image img = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(width, height, rgbInt, 0, width));
+            // Create image.
+            img = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(width, height, rgbInt, 0, width));
 
             //System.out.println(size);
-
-            //return img;
         } catch ( IOException e ){
             e.printStackTrace();
         }
+        
+        return img;
     }
 
     public Image myWrite(Image img, String filePath) {
-        return null;
+        BufferedImage bimg = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        ImageIO.write(bimg, "bmp", new File(filePath));
+        return img;
     }
 
     public static int toInt( byte[] src, int num ) {
