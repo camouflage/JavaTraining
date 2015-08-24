@@ -14,13 +14,22 @@
 
 
     <target name="compile" depends="clean, init">
-        <javac srcdir="src" destdir="${buildDir}">
+      <javac srcdir="src" destdir="${buildDir}">
         <classpath>
           <pathelement path="${reader}/ImageReader.jar"/>
           <pathelement path="${lib}/swing-worker-1.1.jar"/>
           <pathelement path="${lib}appframework-1.0.3.jar"/>
+          <pathelement path="junit-4.9.jar"/>
         </classpath>
       </javac>
+      <javac srcdir="test" destdir="${buildDir}">
+        <classpath>
+          <pathelement path="${reader}/ImageReader.jar"/>
+          <pathelement path="${lib}/swing-worker-1.1.jar"/>
+          <pathelement path="${lib}appframework-1.0.3.jar"/>
+          <pathelement path="junit-4.9.jar"/>
+        </classpath>
+      </javac>  
     </target>
 
     <target name="img" depends="compile">
@@ -30,8 +39,27 @@
           <pathelement path="${buildDir}/"/>
           <pathelement path="${lib}/swing-worker-1.1.jar"/>
           <pathelement path="${lib}/appframework-1.0.3.jar"/>
+          <pathelement path="junit-4.9.jar"/>
         </classpath>
       </java>
     </target>
+
+    <target name="test" depends="compile">
+        <junit>
+            <classpath>
+                <pathelement path="${reader}/ImageReader.jar"/>
+                <pathelement path="${buildDir}/"/>
+                <pathelement path="${lib}/swing-worker-1.1.jar"/>
+                <pathelement path="${lib}/appframework-1.0.3.jar"/>
+                <pathelement path="junit-4.9.jar"/>
+            </classpath>
+
+            <formatter type="brief" usefile="false" />
+
+            <test name="ImageReaderTest" />
+        </junit>
+    </target>
+
+
 
 </project>
