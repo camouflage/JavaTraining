@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="grid" default="compile">
+    <property name="parentDir" location="./../../../../"/>
+    <property name="buildDir" location="build"/>
+
+    <target name="clean">
+      <delete dir="${buildDir}"/>
+    </target>
+
+    <target name="init">
+      <mkdir dir="${buildDir}"/>
+    </target>
+
+
+    <target name="compile" depends="clean, init">
+        <javac srcdir="src" destdir="${buildDir}">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+        </classpath>
+      </javac>
+    </target>
+
+    <target name="grid" depends="compile">
+      <java classname="mygrid.SparseGridRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="${buildDir}/"/>
+        </classpath>
+      </java>
+    </target>
+
+</project>

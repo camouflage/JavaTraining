@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<project name="jumper" default="run">
+  <property name="parentDir" location="./../../"/>
+
+	<target name="compile">
+   		<javac srcdir="." destdir=".">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+        </classpath>
+      </javac>
+	</target>
+
+  <target name="run" depends="compile">
+      <java classname="JumperRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="."/>
+        </classpath>
+      </java>
+  </target>
+
+  <target name="junit" depends="compile">
+      <junit>
+          <classpath>
+              <pathelement path="${parentDir}/junit-4.9.jar"/>
+              <pathelement path="."/>
+          </classpath>
+          <formatter type="brief" usefile="false" />
+          <test name="JumperTest" />
+      </junit>
+  </target>
+
+</project>

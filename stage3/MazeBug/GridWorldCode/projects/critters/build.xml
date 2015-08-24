@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<project name="critter" default="compile">
+    <property name="parentDir" location="./../../"/>
+    <property name="buildDir" location="build"/>
+
+    <target name="clean">
+      <delete dir="${buildDir}"/>
+    </target>
+
+    <target name="init">
+      <mkdir dir="${buildDir}"/>
+    </target>
+
+
+    <target name="compile" depends="clean, init">
+        <javac srcdir="." destdir="${buildDir}">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+        </classpath>
+      </javac>
+    </target>
+
+    <target name="chameleon" depends="compile">
+      <java classname="ChameleonRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="${buildDir}"/>
+        </classpath>
+      </java>
+    </target>
+
+    <target name="kid" depends="compile">
+      <java classname="ChameleonKidRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="ChameleonKid"/>
+          <pathelement path="${buildDir}"/>
+        </classpath>
+      </java>
+    </target>
+
+    <target name="rock" depends="compile">
+      <java classname="RockRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="RockHound"/>
+          <pathelement path="${buildDir}"/>
+        </classpath>
+      </java>
+    </target>
+
+    <target name="bluster" depends="compile">
+      <java classname="BlusterRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="BlusterCritter"/>
+          <pathelement path="${buildDir}"/>
+        </classpath>
+      </java>
+    </target>
+
+    <target name="quick" depends="compile">
+      <java classname="QuickRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="QuickCrab"/>
+          <pathelement path="${buildDir}"/>
+        </classpath>
+      </java>
+    </target>
+
+    <target name="king" depends="compile">
+      <java classname="KingRunner" fork="true">
+        <classpath>
+          <pathelement path="${parentDir}/gridworld.jar"/>
+          <pathelement path="KingCrab"/>
+          <pathelement path="${buildDir}"/>
+        </classpath>
+      </java>
+    </target>
+
+    <target name="all" depends="chameleon, kid, rock, bluster, quick, king"/>
+
+</project>
