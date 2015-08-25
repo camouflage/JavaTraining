@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="jigsaw" default="jigsaw2">
+
+  <target name="clean">
+      <delete dir="build"/>
+    </target>
+
+    <target name="init">
+      <mkdir dir="build"/>
+    </target>
+
+	<target name="compile" depends="clean, init">
+      <javac srcdir="." destdir="build"/>
+	</target>
+
+  <target name="jigsaw1" depends="compile">
+      <java classname="Runners.RunnerPart1" fork="true">
+        <classpath>
+          <pathelement path="build"/>
+        </classpath>
+      </java>
+  </target>
+
+  <target name="jigsaw2" depends="compile">
+      <java classname="Runners.RunnerPart2" fork="true">
+        <classpath>
+          <pathelement path="build"/>
+        </classpath>
+      </java>
+  </target>
+
+</project>
