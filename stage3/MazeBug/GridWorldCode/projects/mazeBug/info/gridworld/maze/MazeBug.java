@@ -3,6 +3,7 @@ package info.gridworld.maze;
 import info.gridworld.actor.Actor;
 import info.gridworld.actor.Bug;
 import info.gridworld.actor.Flower;
+import info.gridworld.actor.Rock;
 import info.gridworld.grid.*;
 
 import java.awt.Color;
@@ -12,6 +13,8 @@ import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
+import java.util.*;
+
 /**
  * A <code>MazeBug</code> can find its way in a maze. <br />
  * The implementation of this class is testable on the AP CS A and AB exams.
@@ -20,7 +23,8 @@ public class MazeBug extends Bug {
 	public Location next;
 	public Location last;
 	public boolean isEnd = false;
-	public Stack<ArrayList<Location>> crossLocation = new Stack<ArrayList<Location>>();
+	public boolean isStart = true;
+	public Stack<Location> crossLocation = new Stack<Location>();
 	public Integer stepCount = 0;
 	boolean hasShown = false;//final message has been shown
 
@@ -48,6 +52,11 @@ public class MazeBug extends Bug {
 				hasShown = true;
 			}
 		} else if (willMove) {
+			if ( isStart ) {
+				crossLocation.push(getLocation());
+				isStart = false;
+			}
+
 			move();
 			//increase step count when move 
 			stepCount++;
@@ -66,7 +75,20 @@ public class MazeBug extends Bug {
 		if (gr == null)
 			return null;
 		ArrayList<Location> valid = new ArrayList<Location>();
-		
+
+		int d = Location.NORTH;
+        for ( int i = 0; i < 4; i++ ) {
+            Location neighborLoc = loc.getAdjacentLocation(d);
+            if ( gr.isValid(neighborLoc) ) {
+            	Actor a = gr.get(neighborLoc);
+            	if ( a == null ||
+            		( a instanceof Rock && a.getColor().equals(Color.RED) ) ) {
+            		valid.add(neighborLoc);
+            	}
+            } 
+                
+            d = d + Location.RIGHT;
+        }
 		return valid;
 	}
 
@@ -77,8 +99,14 @@ public class MazeBug extends Bug {
 	 * @return true if this bug can move.
 	 */
 	public boolean canMove() {
-		return false;
+		Grid<Actor> gr = getGrid();
+        if (gr == null) {
+            return false;
+        } else {
+        	return true;
+        }
 	}
+
 	/**
 	 * Moves the bug forward, putting a flower into the location it previously
 	 * occupied.
@@ -87,13 +115,43 @@ public class MazeBug extends Bug {
 		Grid<Actor> gr = getGrid();
 		if (gr == null)
 			return;
-		Location loc = getLocation();
-		if (gr.isValid(next)) {
-			setDirection(getLocation().getDirectionToward(next));
-			moveTo(next);
-		} else
-			removeSelfFromGrid();
-		Flower flower = new Flower(getColor());
-		flower.putSelfInGrid(gr, loc);
+
+		Location loc = crossLocation.peek();
+		//System.out.println(loc.toString());
+		ArrayList<Location> validLoc = getValid(loc);
+		//System.out.println(validLoc.size());
+
+		if ( validLoc.size() == 0 ) {
+			loc = crossLocation.pop();
+			Location newLoc = crossLocation.peek();
+			//System.out.println(newLoc.toString());
+			int dir = loc.getDirectionToward(newLoc);
+			setDirection(dir);
+			moveTo(newLoc);
+			Flower flower = new Flower(getColor());
+        	flower.putSelfInGrid(gr, loc);
+		} else {
+			for ( Location locs : validLoc ) {
+				Actor a = gr.get(locs);
+				if ( a instanceof Rock && a.getColor().equals(Color.RED) ) {
+					isEnd = true;
+					break;
+				}
+			}
+
+			if ( isEnd == false ) {
+				Random random = new Random();
+				int index = random.nextInt(validLoc.size());
+				Location newLoc = validLoc.get(index);
+				crossLocation.push(newLoc);
+				int dir = loc.getDirectionToward(newLoc);
+				setDirection(dir);
+				moveTo(newLoc);
+				Flower flower = new Flower(getColor());
+        		flower.putSelfInGrid(gr, loc);
+			}
+		}
+
+		//System.out.println(crossLocation.peek().toString());
 	}
 }

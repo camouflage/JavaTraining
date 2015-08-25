@@ -18,6 +18,11 @@
 
 import info.gridworld.actor.Bug;
 
+
+import info.gridworld.actor.Rock;
+import info.gridworld.actor.Actor;
+
+
 /**
  * A <code>CircleBug</code> traces out a circle of a given size. <br />
  * The implementation of this class is testable on the AP CS A and AB exams.

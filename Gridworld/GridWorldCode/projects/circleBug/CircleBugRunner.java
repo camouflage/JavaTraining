@@ -35,6 +35,7 @@ public class CircleBugRunner
         CircleBug bob = new CircleBug(3);
         world.add(new Location(4, 4), alice);
         world.add(new Location(3, 6), bob);
+
         world.show();
     }
 }

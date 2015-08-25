@@ -1,62 +1,38 @@
 <?xml version="1.0"?>
-<project name="jumper_src" default="circle">
+<project name="maze" default="maze2">
 
-	<target name="compile">
-   		<javac srcdir="circleBug" destdir="circleBug">
+	<target name="compile1">
+   		<javac srcdir="mazeBug">
         <classpath>
-          <pathelement path="./../gridworld.jar"/>
-        </classpath>
-      </javac>
-      <javac srcdir="spiralBug" destdir="spiralBug">
-        <classpath>
-          <pathelement path="./../gridworld.jar"/>
-        </classpath>
-      </javac>
-      <javac srcdir="zBug" destdir="zBug">
-        <classpath>
-          <pathelement path="./../gridworld.jar"/>
-        </classpath>
-      </javac>
-      <javac srcdir="dancingBug" destdir="dancingBug">
-        <classpath>
-          <pathelement path="./../gridworld.jar"/>
+          <pathelement path="./../gridworld1.jar"/>
         </classpath>
       </javac>
 	</target>
 
-  <target name="circle" depends="compile">
-      <java classname="CircleBugRunner" fork="true">
+  <target name="compile2">
+      <javac srcdir="mazeBug">
         <classpath>
           <pathelement path="./../gridworld.jar"/>
-          <pathelement path="circleBug"/>
+        </classpath>
+      </javac>
+  </target>
+
+  <target name="maze" depends="compile1">
+      <java classname="info.gridworld.maze.MazeBugRunner" fork="true">
+        <classpath>
+          <pathelement path="./../gridworld1.jar"/>
+          <pathelement path="mazeBug"/>
         </classpath>
       </java>
   </target>
 
-  <target name="spiral" depends="compile">
-      <java classname="SpiralBugRunner" fork="true">
+  <target name="maze2" depends="compile2">
+      <java classname="info.gridworld.maze.MazeBug2Runner" fork="true">
         <classpath>
           <pathelement path="./../gridworld.jar"/>
-          <pathelement path="spiralBug"/>
+          <pathelement path="mazeBug"/>
         </classpath>
       </java>
   </target>
 
-  <target name="z" depends="compile">
-      <java classname="ZBugRunner" fork="true">
-        <classpath>
-          <pathelement path="./../gridworld.jar"/>
-          <pathelement path="zBug"/>
-        </classpath>
-      </java>
-  </target>
-
-  <target name="dancing" depends="compile">
-      <java classname="DancingBugRunner" fork="true">
-        <classpath>
-          <pathelement path="./../gridworld.jar"/>
-          <pathelement path="dancingBug"/>
-        </classpath>
-      </java>
-  </target>
 </project>
