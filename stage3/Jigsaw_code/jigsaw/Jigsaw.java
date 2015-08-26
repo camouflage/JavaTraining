@@ -341,23 +341,87 @@ public class Jigsaw {
 	 * @param jNode - 要计算代价估计值的节点；此函数会改变该节点的estimatedValue属性值。
 	 */
 	private void estimateValue(JigsawNode jNode) {
-		int s = 0; // 后续节点不正确的数码个数
+		jNode.setEstimatedValue(value0(jNode) * 1 + value1(jNode) * 8
+			+ value2(jNode) * 4 + jNode.getNodeDepth() * 0);
+	}
+
+	private int value0(JigsawNode jNode) {
+		int s = 0; // misplaced
 		int dimension = JigsawNode.getDimension();
 		int[] state = jNode.getNodesState();
-		for ( int index = 1; index < dimension * dimension; index++ ) {
-			int rowGoal = (state[index] - 1) / 5;
-			int colGoal = (state[index] - 1) % 5;
-			int rowNow = (index - 1) / 5;
-			int colNow = (index - 1) % 5;
-			if ( state[index] == 0 ) {
-				rowGoal = 4;
-				colGoal = 4;
+		for( int index = 1 ; index <= dimension * dimension; index++ ) {
+			if ( state[index] != 0 && state[index] != index ) {
+				s++;
 			}
-			s += Math.ceil ( Math.sqrt( (double) ( (rowGoal - rowNow) * (rowGoal - rowNow) +
-				(colGoal - colNow) * (colGoal - colNow) ) ) );
+		}
+		return s;
+	}
+
+	private int value1(JigsawNode jNode) {
+		int s = 0;
+		int dimension = JigsawNode.getDimension();
+		int[] state = jNode.getNodesState();
+		/*
+		for ( int index = 1; index <= dimension * dimension; index++ ) {
+			if ( state[index] == 0 ) {
+				continue;
+			}
+
+			int rowGoal = (state[index] - 1) / dimension;
+			int colGoal = (state[index] - 1) % dimension;
+			int rowNow = (index - 1) / dimension;
+			int colNow = (index - 1) % dimension;
+
+			s += Math.abs(rowGoal - rowNow) + Math.abs(colGoal - colNow);
 
 		}
-		jNode.setEstimatedValue(s);
+		*/
+		int[] rowGoal = new int[dimension * dimension + 1];
+        int[] colGoal = new int[dimension * dimension + 1];
+        int[] rowNow = new int[dimension * dimension + 1];
+        int[] colNow = new int[dimension * dimension + 1];
+
+        for ( int index = 1; index <= dimension * dimension; index++ ) {
+            if ( state[index] == 0 ) {
+                continue;
+            }
+
+            rowGoal[index] = (state[index] - 1) / dimension;
+            colGoal[index] = (state[index] - 1) % dimension;
+            rowNow[index] = (index - 1) / dimension;
+            colNow[index] = (index - 1) % dimension;
+        }
+
+        for ( int index = 1; index <= dimension * dimension; index++ ) {
+            if ( state[index] == 0 ) {
+                continue;
+            }
+
+            s += Math.abs(rowGoal[index] - rowNow[index]) + Math.abs(colGoal[index] - colNow[index]);
+        }
+
+        for ( int i = 1; i <= dimension * dimension - 1; i++ ) {
+            for ( int j = i + 1; j <= dimension * dimension; j++ ) {
+                if ( (rowGoal[i] == rowGoal[j]) && (rowNow[i] == rowGoal[i]) && (rowNow[j] == rowGoal[j]) &&
+                    (colGoal[i] > colGoal[j]) ) {
+                        s += 2;
+                }
+            }
+        }
+
+		return s;
 	}
+
+	private int value2(JigsawNode jNode) {
+		int s = 0; // 后续节点不正确的数码个数
+		int dimension = JigsawNode.getDimension();
+		for(int index =1 ; index<dimension*dimension; index++){
+			if(jNode.getNodesState()[index]+1!=jNode.getNodesState()[index+1])
+				s++;
+		}
+		return s;
+	}
+
+
 
 }

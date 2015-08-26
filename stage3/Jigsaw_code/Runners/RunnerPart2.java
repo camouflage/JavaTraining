@@ -33,6 +33,7 @@ public class RunnerPart2 {
 
 		// 执行启发式搜索示例算法
 		jigsaw.ASearch();
+
 	}
 
 }
