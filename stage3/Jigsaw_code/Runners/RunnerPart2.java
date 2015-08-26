@@ -33,7 +33,32 @@ public class RunnerPart2 {
 
 		// 执行启发式搜索示例算法
 		jigsaw.ASearch();
+		
 
+		/*
+		int[] count = new int[20];
+
+		JigsawNode destNode = new JigsawNode(new int[]{25,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,0});  	
+
+		JigsawNode startNode ;
+		Jigsaw jigsaw;
+
+		for ( int i = 0; i < 20; i++ ) {
+			startNode = Jigsaw.scatter(destNode, 1000);
+			jigsaw = new Jigsaw(startNode, destNode);
+			jigsaw.ASearch();
+			count[i] = jigsaw.getSearchedNodesNum();
+		}
+
+		int sum = 0;
+		for ( int i = 0; i < 20; i++ ) {
+			System.out.println(count[i]);
+			sum += count[i];
+		}
+		System.out.println("avg");
+		System.out.println(sum / 20);
+		*/
+		
 	}
 
 }

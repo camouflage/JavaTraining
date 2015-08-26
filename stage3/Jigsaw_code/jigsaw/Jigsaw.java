@@ -341,8 +341,22 @@ public class Jigsaw {
 	 * @param jNode - 要计算代价估计值的节点；此函数会改变该节点的estimatedValue属性值。
 	 */
 	private void estimateValue(JigsawNode jNode) {
-		jNode.setEstimatedValue(value0(jNode) * 1 + value1(jNode) * 8
+		/* 1Fail, avg 6897 */
+		jNode.setEstimatedValue(value0(jNode) * 1 + value1(jNode) * 7
 			+ value2(jNode) * 4 + jNode.getNodeDepth() * 0);
+		
+		/* 0Fail avg 7244
+		jNode.setEstimatedValue(value0(jNode) * 3 + value1(jNode) * 4
+			+ value2(jNode) * 3 + jNode.getNodeDepth() * 0);
+		*/
+		/* 1Fail avg 7086
+		jNode.setEstimatedValue(value0(jNode) * 2 + value1(jNode) * 4
+			+ value2(jNode) * 3 + jNode.getNodeDepth() * 0);
+		*/
+		/* 2Fails avg9430
+		jNode.setEstimatedValue(value0(jNode) * 1 + value1(jNode) * 4
+			+ value2(jNode) * 3 + jNode.getNodeDepth() * 0);
+		*/
 	}
 
 	private int value0(JigsawNode jNode) {

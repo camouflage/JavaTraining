@@ -13,6 +13,14 @@
       <javac srcdir="." destdir="build"/>
 	</target>
 
+  <target name="demo" depends="compile">
+      <java classname="Runners.RunnerDemo" fork="true">
+        <classpath>
+          <pathelement path="build"/>
+        </classpath>
+      </java>
+  </target>
+
   <target name="jigsaw1" depends="compile">
       <java classname="Runners.RunnerPart1" fork="true">
         <classpath>
